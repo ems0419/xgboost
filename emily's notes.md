@@ -2,11 +2,11 @@
 -----------
 * xgboost参数说明 ：
 	* 通用参数
-	基模型参数
-	任务参数
+	* 基模型参数
+	* 任务参数
 * 调参指南（官方）：
-	控制过拟合
-	控制不均衡数据
+	* 控制过拟合
+	* 控制不均衡数据
 * 自定义目标函数
 
 # 参数说明
@@ -16,7 +16,7 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数。
 
-### 通用参数：
+	# 通用参数：
  
  #### -booster：设置集学习器。常用的就是gbtree（默认值）
  
