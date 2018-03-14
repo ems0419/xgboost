@@ -55,48 +55,35 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 * lambda：
   * 正则化项1的参数，表示正则化的强度，此值越大，这个算法会越保守
 * alpha：
- * 正则化项2的参数，表示正则化的强度，此值越大，这个算法会越保守
-  
- ####  -scale_pos_weigth：
- 
- 在样本不均衡时会用到，是控制样本权重的参数。取值通常是负样本总数/正样本总数。
- 
-    #数据预处理，设置函数，来计算scale_pos_weight的值
-    
-    def preproc(dtrain, dtest, param):
-        labels = dtrain.get_label()
-        ratio = float(np.sum(labels==0))/np.sum(labels==1)    #负样本总数/正样本总数
-        param['scale_pos_weigth'] = ratio                     #将计算出来的ratio放到param字典中
-        return (dtrain, dtest, param)
+ * 正则化项2的参数，表示正则化的强度，此值越大，这个算法会越保守 
+* scale_pos_weigth：
+ * 在样本不均衡时会用到，是控制样本权重的参数。取值通常是负样本总数/正样本总数。
+	    #数据预处理，设置函数，来计算scale_pos_weight的值
+	    def preproc(dtrain, dtest, param):
+		labels = dtrain.get_label()
+		ratio = float(np.sum(labels==0))/np.sum(labels==1)    #负样本总数/正样本总数
+		param['scale_pos_weigth'] = ratio                     #将计算出来的ratio放到param字典中
+		return (dtrain, dtest, param)
 
-    xgb.cv(param, dtrain, num_round, nfold=5, metrics={'auc'}, seed=3, fpreproc=preproc)
+	    xgb.cv(param, dtrain, num_round, nfold=5, metrics={'auc'}, seed=3, fpreproc=preproc)
  
- ####  -其他参数：用的不多，需要的时候详细看
+* 其他参数：用的不多，需要的时候详细看
          
  
 基模型参数：当基模型为linear时，设置linear booster参数
 ---------- 
- ####  -lambda：
- ####  -alpha：
- ####  -lambda_bias：
+* lambda：
+* alpha：
+* lambda_bias：
  
- # 任务参数
- 
- #### -objective
- 
- 可以看做是损失函数、代价函数、目标函数的设定
- 
- #### -base_score：通常不会去调整它
- 
- #### eval_metric:
- 
- 评估标准
- 
- #### -其他参数：用的不多，需要的时候详细看
- 
- 
- 
-
+任务参数
+--------
+* objective
+ * 可以看做是损失函数、代价函数、目标函数的设定
+* base_score：通常不会去调整它
+* eval_metric:
+ * 评估标准
+* 其他参数：用的不多，需要的时候详细看
 
 调参指南（官方）
 ----------
@@ -104,39 +91,26 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 
 调参过程，其实就是欠拟合和过拟合的程度的平衡。采用boosting模式时，很少会出现欠拟合（underfitting），除非是参数特别特别少。所以大部分情况下，更有可能会进入过拟合（overfitting）陷阱。
  
-## 控制过拟合
-
+# 控制过拟合
 主要有两种方式：
-
-### 直接控制模型的复杂度
-#### -max_depth
-#### -min_child_weight
-#### -gamma
-### 从样本/数据的角度来增加鲁棒性
-#### -subsample
-#### -colsample
-#### -减小eta，此时需要同时增加num_round
-
-
-## 控制不均衡数据
-
-#### 当只关心预测的排序（AUC）时，
-
- - 平衡正负样本权重，通过scale_pos_weight
-
- - 用AUC进行评价
-
-#### 关心预测的正确的概率时，
-
- - 不能平衡正负样本比例
-
- - 通过max_delta_step来帮助收敛
- 
- 
+* 直接控制模型的复杂度
+ * max_depth
+ * min_child_weight
+ * gamma
+* 从样本/数据的角度来增加鲁棒性
+ * subsample
+ * colsample
+ * 减小eta，此时需要同时增加num_round
+# 控制不均衡数据
+* 当只关心预测的排序（AUC）时，
+ * 平衡正负样本权重，通过scale_pos_weight
+ * 用AUC进行评价
+* 关心预测的正确的概率时，
+ * 不能平衡正负样本比例
+ * 通过max_delta_step来帮助收敛 
 # 自定义目标函数
 
     #自定义目标函数(log似然),需要提供一阶和二阶导数
-    
     def logregobj(pred,dtrain):
 		labels = dtrain.get_label()
 		pred =1.0 / (1+np.exp(-pred))
@@ -144,19 +118,17 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 		hess = pred *( 1 - pred)
 		return grad, hell
 	
-	def evalerror(pred, dtrain):
+    def evalerror(pred, dtrain):
     labels = dtrain.get_label()
     return 'error', float(sum(labels != (pred>0.0)))/len(labels)
-
-	param = {'max_depth':2, 'eta':1, 'silent':1}
-
-	#自定义目标函数训练
-	model = xgb.train(param, dtrain, num_round, watch_list, logregobj, evalerror)
+    
+    param = {'max_depth':2, 'eta':1, 'silent':1}
+    
+    #自定义目标函数训练
+    model = xgb.train(param, dtrain, num_round, watch_list, logregobj, evalerror)
 目标函数和损失函数刚好相反：
-
-	目标函数——梯度上升
-
-	损失函数——梯度下降
+ * 目标函数——梯度上升
+ * 损失函数——梯度下降
  
 xgboost usage demo
 ------------------
