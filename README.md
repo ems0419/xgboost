@@ -38,7 +38,7 @@ XGBoost has been developed and used by a group of active community members. Your
 - Check out [call for contributions](https://github.com/dmlc/xgboost/issues?q=is%3Aissue+label%3Acall-for-contribution+is%3Aopen) and [Roadmap](https://github.com/dmlc/xgboost/issues/873) to see what can be improved, or open an issue if you want something.
 - Contribute to the [documents and examples](https://github.com/dmlc/xgboost/blob/master/doc/) to share your experience with other users.
 - Add your stories and experience to [Awesome XGBoost](demo/README.md).
-  [Awesome XGBoost]页面很重要，里面包括模型指导、一些案例（竞赛中和实际中被封神的应用案例），还有其他的东西。
+   [Awesome XGBoost]页面很重要，里面包括模型指导、一些案例（竞赛中和实际中被封神的应用案例），还有其他的东西。
 - Please add your name to [CONTRIBUTORS.md](CONTRIBUTORS.md) and after your patch has been merged.
   - Please also update [NEWS.md](NEWS.md) on changes and improvements in API and docs.
 
