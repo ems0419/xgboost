@@ -102,6 +102,10 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
  
  #### -其他参数：用的不多，需要的时候详细看
  
+
+
+
+
 # 调参指南（官方）
 http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanced-dataset
 
@@ -112,10 +116,27 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 主要有两种方式：
 
 ### 直接控制模型的复杂度
-#### max_depth
-#### min_child_weight
-#### gamma
-### 
+#### -max_depth
+#### -min_child_weight
+#### -gamma
+### 从样本/数据的角度来增加鲁棒性
+#### -subsample
+#### -colsample
+#### -减小eta，此时需要同时增加num_round
+
+## 控制不均衡数据
+
+#### 当只关心预测的排序（AUC）时，
+
+平衡正负样本权重，通过scale_pos_weight
+
+用AUC进行评价
+
+#### 关心预测的正确的概率时，
+
+不能平衡正负样本比例
+
+通过max_delta_step来帮助收敛
 
  
  
