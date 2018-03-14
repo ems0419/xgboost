@@ -1,13 +1,13 @@
  contents
 -----------
-* [xgboost参数说明](https://github.com/ems0419/xgboost/issues) page：
+* [xgboost参数说明](emily's notes.md) ：
 	 通用参数
 	 基模型参数
 	 任务参数
-* [调参指南（官方）](https://github.com/ems0419/xgboost/issues) page：
+* [调参指南（官方）](emily's notes.md) ：
 	 控制过拟合
 	控制不均衡数据
-* [自定义目标函数](https://github.com/ems0419/xgboost/issues) page
+* [自定义目标函数](emily's notes.md) 
 
 # 参数说明
 http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
