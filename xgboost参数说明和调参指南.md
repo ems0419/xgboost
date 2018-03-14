@@ -1,3 +1,4 @@
+# 参数说明
 http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 此页面是以R为例，Python一样。本内容为个人的理解
