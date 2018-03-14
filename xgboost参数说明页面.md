@@ -1,6 +1,6 @@
 http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
-此页面是以R为例，Python一样。本内容为此页面的汉化
+此页面是以R为例，Python一样。本内容为个人的理解
 
 ## 参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数
 
