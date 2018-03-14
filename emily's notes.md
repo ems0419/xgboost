@@ -10,7 +10,7 @@ contents
 * 自定义目标函数
 * xgboost usage demo
 
-参数说明
+xgboost参数说明
 ----------
 http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
