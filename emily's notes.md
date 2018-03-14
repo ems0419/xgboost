@@ -26,13 +26,12 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 * num_pbuffer：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
 * num_feature：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
  
-### 基模型参数：当基模型为树模型时，设置tree booster参数
+# 基模型参数：当基模型为树模型时，设置tree booster参数
 
- #### -eta：
+* eta：
+	即learning rate,默认值是0.3，范围是[0,1]，通常会通过参数字典进行调参。不同的learning rate收敛的速度是有差别的。
  
-  即learning rate,默认值是0.3，范围是[0,1]，通常会通过参数字典进行调参。不同的learning rate收敛的速度是有差别的。
- 
- ####  -gamma：
+* gamma：
  
   对树的叶子节点做进一步分割的时候，设置的损失减少的最小值。如果这个值越大，这个算法会越保守（即不会激进的做下一步的分裂）。
  
@@ -40,7 +39,7 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
  
   默认值是0，范围是[0,∞]
          
- ####  -max_depth：
+* max_depth：
 
   树的深度，控制过拟合
 
@@ -107,7 +106,7 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
  ####  -alpha：
  ####  -lambda_bias：
  
- ### 任务参数
+ # 任务参数
  
  #### -objective
  
