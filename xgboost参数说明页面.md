@@ -2,7 +2,7 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 此页面是以R为例，Python一样。本内容为此页面的汉化
 
-## 参数主要有三大类：通用参数、基模型参数（tree booster）
+## 参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数
 
 
 ### 通用参数：
@@ -74,6 +74,27 @@ tips:串行的模型容易过拟合。
 正则化项2的参数，表示正则化的强度，此值越大，这个算法会越保守
   
  ####  -scale_pos_weight：
+ 
+ 在样本不均衡时会用到，是控制样本权重的参数。取值通常是负样本总数/正样本总数。
+ 
+ ####  -其他参数：用的不多，需要的时候详细看
          
  
+ ### 基模型参数：当基模型为linear时，设置linear booster参数
+  
+ ####  -lambda：
+ ####  -alpha：
+ ####  -lambda_bias：
+ 
+ ### 任务参数
+ 
+ #### -objective
+ 
+ 可以看做是损失函数、代价函数、目标函数的设定
+ 
+ #### -base_score：通常不会去调整它
+ 
+ #### eval_metric:
+ 
+ 评估标准
  
