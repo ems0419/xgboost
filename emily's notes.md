@@ -324,8 +324,20 @@ xgboost usage demo
 			#标准答案
 			ground_truth = y_boston[test_index]
 			print(mean_squared_error(ground_truth, pred))
+			
+* 网格调参（优化超参数）
 
-	
-	
-	
- 
+		boston = load_boston()
+		y_boston = boston['target']
+		X_boston = boston['data']
+		xgb_model = xgb.XGBRegressor()
+		
+		#参数字典
+		param_dict = {'max_depth':[2,4,6], 'n_estimators':[50, 100, 200]}
+
+		rgs = GridSearchCV(xgb_model, param_dict)
+		
+		print(rgs.best_score_)
+		
+		print(rgs.best_params_)
+
