@@ -75,9 +75,18 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 正则化项2的参数，表示正则化的强度，此值越大，这个算法会越保守
   
- ####  -scale_pos_weight：
+ ####  -scale_pos_weigth：
  
  在样本不均衡时会用到，是控制样本权重的参数。取值通常是负样本总数/正样本总数。
+ 
+    #数据预处理，设置函数，来计算scale_pos_weight的值
+    def preproc(dtrain, dtest, param):
+       labels = dtrain.get_label()
+       ratio = float(np.sum(labels==0))/np.sum(labels==1)  #负样本总数/正样本总数
+       param['scale_pos_weigth'] = ratio  #将计算出来的ratio放到param字典中
+       return (dtrain, dtest, param)
+       
+    xgb.cv(param, dtrain, num_round, nfold=5, metrics={'auc'}, seed=3, fpreproc=preproc)
  
  ####  -其他参数：用的不多，需要的时候详细看
          
@@ -123,6 +132,7 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 #### -subsample
 #### -colsample
 #### -减小eta，此时需要同时增加num_round
+
 
 ## 控制不均衡数据
 
