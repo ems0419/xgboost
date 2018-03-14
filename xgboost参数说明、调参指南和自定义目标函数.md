@@ -168,6 +168,11 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 
 	#自定义目标函数训练
 	model = xgb.train(param, dtrain, num_round, watch_list, logregobj, evalerror)
+目标函数和损失函数刚好相反：
+
+目标函数——梯度上升
+
+损失函数——梯度下降
  
  
  
