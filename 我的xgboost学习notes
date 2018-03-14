@@ -162,6 +162,7 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
  
  
 # 自定义目标函数
+
     #自定义目标函数(log似然),需要提供一阶和二阶导数
     
     def logregobj(pred,dtrain):
