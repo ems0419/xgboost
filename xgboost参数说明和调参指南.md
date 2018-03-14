@@ -104,10 +104,6 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
  
  
  
- #
- #
- #
- #
 
 
 # 调参指南（官方）
