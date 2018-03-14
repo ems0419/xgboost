@@ -79,10 +79,10 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 任务参数
 --------
 * objective
- * 可以看做是损失函数、代价函数、目标函数的设定
+	* 可以看做是损失函数、代价函数、目标函数的设定
 * base_score：通常不会去调整它
 * eval_metric:
- * 评估标准
+	* 评估标准
 * 其他参数：用的不多，需要的时候详细看
 
 调参指南（官方）
