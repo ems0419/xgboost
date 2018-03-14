@@ -102,8 +102,12 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
  
  #### -其他参数：用的不多，需要的时候详细看
  
-
-
+ 
+ 
+ #
+ #
+ #
+ #
 
 
 # 调参指南（官方）
