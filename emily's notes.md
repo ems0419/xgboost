@@ -188,135 +188,142 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 xgboost usage demo
 ------------------
 * 基本用法
-	import numpy as np
-	import scipy.sparse
-	import cPickle
-	import xgboost as xgb
+	
+		import numpy as np
+		import scipy.sparse
+		import cPickle
+		import xgboost as xgb
 
-	dtrain = xgb.DMatrix('../data/agaricus.txt.train')
-	dtest = xgb.DMatrix('../data/agaricus.txt.test')
-	
-	#parameter setting
-	param = {'max_depth':2, 'eta':1, 'silent':1, 'objective':'binary:logistic'}
+		dtrain = xgb.DMatrix('../data/agaricus.txt.train')
+		dtest = xgb.DMatrix('../data/agaricus.txt.test')
 
-	watch_list = [(dtest, 'eval'),(dtrain, 'train')]
-	num_round = 10
-	model = xgb.train(param, dtrain, num_round, watch_list)
-	
-	pred = model.predict(dtest)
-	pred
-	
-	labels = dtest.get_label()
-	labels
-	
-	error_num = sum([index for index in range(len(pred)) if int(pred[index]>0.5)!=labels[index]])
-	error_num
-	
-	model.dump_model('xgboost1.model')
+		#parameter setting
+		param = {'max_depth':2, 'eta':1, 'silent':1, 'objective':'binary:logistic'}
+
+		watch_list = [(dtest, 'eval'),(dtrain, 'train')]
+		num_round = 10
+		model = xgb.train(param, dtrain, num_round, watch_list)
+
+		pred = model.predict(dtest)
+		pred
+
+		labels = dtest.get_label()
+		labels
+
+		error_num = sum([index for index in range(len(pred)) if int(pred[index]>0.5)!=labels[index]])
+		error_num
+
+		model.dump_model('xgboost1.model')
 * 交叉验证
-	import numpy as np
-	import xgboost as xgb
-	dtrain = xgb.DMatrix('../data/agaricus.txt.train')
-	param = {'max_depth':2, 'eta':1, 'silent':1, 'objective':'binary:logistic'}
-	num_round = 5
 
-	xgb.cv(param, dtrain, num_round, nfold=5, metrics={'error'}, seed=3)
+		import numpy as np
+		import xgboost as xgb
+		dtrain = xgb.DMatrix('../data/agaricus.txt.train')
+		param = {'max_depth':2, 'eta':1, 'silent':1, 'objective':'binary:logistic'}
+		num_round = 5
+
+		xgb.cv(param, dtrain, num_round, nfold=5, metrics={'error'}, seed=3)
 	
 * 调整样本权重
-	def preproc(dtrain, dtest, param):
-		labels = dtrain.get_label()
-		ratio = float(np.sum(labels==0))/np.sum(labels==1)
-		param['scale_pos_ratio'] = ratio
-		return (dtrain, dtest, param)
 
-	xgb.cv(param, dtrain, num_round, nfold=5, metrics={'auc'}, seed=3, fpreproc=preproc)
+		def preproc(dtrain, dtest, param):
+			labels = dtrain.get_label()
+			ratio = float(np.sum(labels==0))/np.sum(labels==1)
+			param['scale_pos_ratio'] = ratio
+			return (dtrain, dtest, param)
+
+		xgb.cv(param, dtrain, num_round, nfold=5, metrics={'auc'}, seed=3, fpreproc=preproc)
 * 自定义目标函数与交叉验证
-	#自定义目标函数(log似然)，交叉验证
-	#提供一阶和二阶导数
-
-	def logregobj(pred, dtrain):
-		labels = dtrain.get_label()
-		pred = 1.0 / (1 + np.exp(-pred))
-		grad = pred - labels
-		hess = pred * (1 - pred)
-		return grad, hess
-
-	def evalerror(pred, dtrain):
-		labels = dtrain.get_label()
-		return 'error', float(sum(labels != (pred>0.0)))/len(labels)
-
-	param = {'max_depth':2, 'eta':1, 'silent':1}
-
-	#自定义目标函数训练
-	model = xgb.train(param, dtrain, num_round, watch_list, logregobj, evalerror)	
 	
-	#交叉验证
-	xgb.cv(param, dtrain, num_round, nfold=5, seed=3, obj=logregobj, feval=evalerror)
+		#自定义目标函数(log似然)，交叉验证
+		#提供一阶和二阶导数
+
+		def logregobj(pred, dtrain):
+			labels = dtrain.get_label()
+			pred = 1.0 / (1 + np.exp(-pred))
+			grad = pred - labels
+			hess = pred * (1 - pred)
+			return grad, hess
+
+		def evalerror(pred, dtrain):
+			labels = dtrain.get_label()
+			return 'error', float(sum(labels != (pred>0.0)))/len(labels)
+
+		param = {'max_depth':2, 'eta':1, 'silent':1}
+
+		#自定义目标函数训练
+		model = xgb.train(param, dtrain, num_round, watch_list, logregobj, evalerror)	
+
+		#交叉验证
+		xgb.cv(param, dtrain, num_round, nfold=5, seed=3, obj=logregobj, feval=evalerror)
 * 用前n颗树做预测
-	pred1 = model.predict(dtest, ntree_limit=1)
-	print evalerror(pred1, dtest)
 
-	pred2 = model.predict(dtest, ntree_limit=2)
-	print evalerror(pred2, dtest)
+		pred1 = model.predict(dtest, ntree_limit=1)
+		print evalerror(pred1, dtest)
 
-	pred3 = model.predict(dtest, ntree_limit=3)
-	print evalerror(pred3, dtest)
+		pred2 = model.predict(dtest, ntree_limit=2)
+		print evalerror(pred2, dtest)
+
+		pred3 = model.predict(dtest, ntree_limit=3)
+		print evalerror(pred3, dtest)
 	
 * 画出特征重要度
-	%matplotlib inline
-	from xgboost import plot_importance
-	import matplotlib.pyplot as plt
-	plot_importance(model, max_num_features=10)
-	plt.show()	
+
+		%matplotlib inline
+		from xgboost import plot_importance
+		import matplotlib.pyplot as plt
+		plot_importance(model, max_num_features=10)
+		plt.show()	
 * 与sklearn和pandas结合
-	import cPickle
-	import xgboost as xgb
-	import numpy as np
-	from sklearn.model_selection import KFold, train_test_split, GridSearchCV
-	from sklearn.metrics import confusion_matrix, mean_squared_error
-	from sklearn.datasets import load_iris, load_digits, load_boston
 
-	#用Xgboost建模，用sklearn做评估
-	#二分类问题，用混淆矩阵
-	digits = load_digits()
-	y = digits['target']
-	X = digits['data']
+		import cPickle
+		import xgboost as xgb
+		import numpy as np
+		from sklearn.model_selection import KFold, train_test_split, GridSearchCV
+		from sklearn.metrics import confusion_matrix, mean_squared_error
+		from sklearn.datasets import load_iris, load_digits, load_boston
 
-	#K折的切分器
-	kf = KFold(n_splits=2, shuffle=True, random_state=1234)
-	for train_index, test_index in kf.split(X):
-		xgboost_model = xgb.XGBClassifier().fit(X[train_index], y[train_index])
-		#预测结果
-		pred = xgboost_model.predict(X[test_index])
-		#标准答案
-		ground_truth = y[test_index]
-		print(confusion_matrix(ground_truth, pred))
+		#用Xgboost建模，用sklearn做评估
+		#二分类问题，用混淆矩阵
+		digits = load_digits()
+		y = digits['target']
+		X = digits['data']
 
-	#多分类
-	iris = load_iris()
-	y_iris = iris['target']
-	X_iris = iris['data']
-	kf = KFold(n_splits=2, shuffle=True, random_state=1234)
-	for train_index, test_index in kf.split(X_iris):
-		xgboost_model = xgb.XGBClassifier().fit(X_iris[train_index], y_iris[train_index])
-		#预测结果
-		pred = xgboost_model.predict(X_iris[test_index])
-		#标准答案
-		ground_truth = y_iris[test_index]
-		print(confusion_matrix(ground_truth, pred))
+		#K折的切分器
+		kf = KFold(n_splits=2, shuffle=True, random_state=1234)
+		for train_index, test_index in kf.split(X):
+			xgboost_model = xgb.XGBClassifier().fit(X[train_index], y[train_index])
+			#预测结果
+			pred = xgboost_model.predict(X[test_index])
+			#标准答案
+			ground_truth = y[test_index]
+			print(confusion_matrix(ground_truth, pred))
 
-	#回归问题
-	boston = load_boston()
-	y_boston = boston['target']
-	X_boston = boston['data']
-	kf = KFold(n_splits=2, shuffle=True, random_state=1234)
-	for train_index, test_index in kf.split(X_boston):
-		xgboost_model = xgb.XGBRegressor().fit(X_boston[train_index], y_boston[train_index])
-		#预测结果
-		pred = xgboost_model.predict(X_boston[test_index])
-		#标准答案
-		ground_truth = y_boston[test_index]
-		print(mean_squared_error(ground_truth, pred))
+		#多分类
+		iris = load_iris()
+		y_iris = iris['target']
+		X_iris = iris['data']
+		kf = KFold(n_splits=2, shuffle=True, random_state=1234)
+		for train_index, test_index in kf.split(X_iris):
+			xgboost_model = xgb.XGBClassifier().fit(X_iris[train_index], y_iris[train_index])
+			#预测结果
+			pred = xgboost_model.predict(X_iris[test_index])
+			#标准答案
+			ground_truth = y_iris[test_index]
+			print(confusion_matrix(ground_truth, pred))
+
+		#回归问题
+		boston = load_boston()
+		y_boston = boston['target']
+		X_boston = boston['data']
+		kf = KFold(n_splits=2, shuffle=True, random_state=1234)
+		for train_index, test_index in kf.split(X_boston):
+			xgboost_model = xgb.XGBRegressor().fit(X_boston[train_index], y_boston[train_index])
+			#预测结果
+			pred = xgboost_model.predict(X_boston[test_index])
+			#标准答案
+			ground_truth = y_boston[test_index]
+			print(mean_squared_error(ground_truth, pred))
 
 	
 	
