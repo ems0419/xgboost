@@ -148,7 +148,26 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
  - 不能平衡正负样本比例
 
  - 通过max_delta_step来帮助收敛
+ 
+ 
+# 自定义目标函数
+    #自定义目标函数(log似然),需要提供一阶和二阶导数
+    
+    def logregobj(pred,dtrain):
+		labels = dtrain.get_label()
+		pred =1.0 / (1+np.exp(-pred))
+		grad = pred - labels
+		hess = pred *( 1 - pred)
+		return grad, hell
+	
+	def evalerror(pred, dtrain):
+    labels = dtrain.get_label()
+    return 'error', float(sum(labels != (pred>0.0)))/len(labels)
 
+	param = {'max_depth':2, 'eta':1, 'silent':1}
+
+	#自定义目标函数训练
+	model = xgb.train(param, dtrain, num_round, watch_list, logregobj, evalerror)
  
  
  
