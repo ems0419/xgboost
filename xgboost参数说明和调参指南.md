@@ -3,7 +3,7 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 此页面是以R为例，Python一样。本内容为个人的理解
 
-## 参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数
+参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数。
 
 ### 通用参数：
  
@@ -101,4 +101,22 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
  评估标准
  
  #### -其他参数：用的不多，需要的时候详细看
+ 
+# 调参指南（官方）
+http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanced-dataset
+
+调参过程，其实就是欠拟合和过拟合的程度的平衡。采用boosting模式时，很少会出现欠拟合（underfitting），除非是参数特别特别少。所以大部分情况下，更有可能会进入过拟合（overfitting）陷阱。
+ 
+## 控制过拟合
+
+主要有两种方式：
+
+### 直接控制模型的复杂度
+#### max_depth
+#### min_child_weight
+#### gamma
+### 
+
+ 
+ 
  
