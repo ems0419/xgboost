@@ -127,7 +127,7 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
  * 目标函数——梯度上升
  * 损失函数——梯度下降
  
-xgboost usage demo
+xgboost usage demo(在jupyter notebook中实现)
 ------------------
 * 基本用法
 	
@@ -216,6 +216,7 @@ xgboost usage demo
 		import matplotlib.pyplot as plt
 		plot_importance(model, max_num_features=10)
 		plt.show()	
+		
 * 与sklearn和pandas结合
 
 		import cPickle
