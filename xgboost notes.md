@@ -18,15 +18,14 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数。
 
-# 通用参数：
-
+### 通用参数：
 * booster：设置集学习器。常用的就是gbtree（默认值）
 * silent：设置在学习（running）的过程中是否需要输出信息，需要的话，设置1，不需要的时候silent=0(default)
 * nthread：用多少个线程，默认情况下是全用
 * num_pbuffer：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
 * num_feature：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
  
-# 基模型参数：当基模型为树模型时，设置tree booster参数
+### 基模型参数：当基模型为树模型时，设置tree booster参数
 
 * eta：
   * 即learning rate,默认值是0.3，范围是[0,1]，通常会通过参数字典进行调参。不同的learning rate收敛的速度是有差别的。
@@ -70,14 +69,12 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 * 其他参数：用的不多，需要的时候详细看
          
  
-基模型参数：当基模型为linear时，设置linear booster参数
----------- 
+### 基模型参数：当基模型为linear时，设置linear booster参数
 * lambda：
 * alpha：
 * lambda_bias：
  
-任务参数
---------
+### 任务参数
 * objective
 	* 可以看做是损失函数、代价函数、目标函数的设定
 * base_score：通常不会去调整它
@@ -91,7 +88,7 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 
 调参过程，其实就是欠拟合和过拟合的程度的平衡。采用boosting模式时，很少会出现欠拟合（underfitting），除非是参数特别特别少。所以大部分情况下，更有可能会进入过拟合（overfitting）陷阱。
  
-# 控制过拟合
+### 控制过拟合
 主要有两种方式：
 * 直接控制模型的复杂度
 	* max_depth
@@ -101,14 +98,14 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
  	* subsample
  	* colsample
 	 * 减小eta，此时需要同时增加num_round
-# 控制不均衡数据
+### 控制不均衡数据
 * 当只关心预测的排序（AUC）时，
  	* 平衡正负样本权重，通过scale_pos_weight
  	* 用AUC进行评价
 * 关心预测的正确的概率时，
 	 * 不能平衡正负样本比例
 	 * 通过max_delta_step来帮助收敛 
-# 自定义目标函数
+### 自定义目标函数
 
     #自定义目标函数(log似然),需要提供一阶和二阶导数
     def logregobj(pred,dtrain):
