@@ -83,8 +83,8 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
     
     def preproc(dtrain, dtest, param):
         labels = dtrain.get_label()
-        ratio = float(np.sum(labels==0))/np.sum(labels==1)  #负样本总数/正样本总数
-        param['scale_pos_weigth'] = ratio  #将计算出来的ratio放到param字典中
+        ratio = float(np.sum(labels==0))/np.sum(labels==1)    #负样本总数/正样本总数
+        param['scale_pos_weigth'] = ratio                     #将计算出来的ratio放到param字典中
         return (dtrain, dtest, param)
 
     xgb.cv(param, dtrain, num_round, nfold=5, metrics={'auc'}, seed=3, fpreproc=preproc)
