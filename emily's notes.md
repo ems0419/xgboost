@@ -17,17 +17,13 @@ http://xgboost.readthedocs.io/en/latest/parameter.html?highlight=seed
 
 参数主要有三大类：通用参数、基模型参数（tree booster、Linear Booster）、任务参数。
 
-## 通用参数：
- 
- #### -booster：设置集学习器。常用的就是gbtree（默认值）
- 
- #### -silent：设置在学习（running）的过程中是否需要输出信息，需要的话，设置1，不需要的时候silent=0(default)
- 
- #### -nthread：用多少个线程，默认情况下是全用
- 
- #### -num_pbuffer：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
- 
- #### -num_feature：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
+# 通用参数：
+
+* booster：设置集学习器。常用的就是gbtree（默认值）
+* silent：设置在学习（running）的过程中是否需要输出信息，需要的话，设置1，不需要的时候silent=0(default)
+* nthread：用多少个线程，默认情况下是全用
+* num_pbuffer：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
+* num_feature：很少用到，有需要的时候再去研究这个参数是干嘛的。用户不需要设置
  
 ### 基模型参数：当基模型为树模型时，设置tree booster参数
 
