@@ -128,15 +128,15 @@ http://xgboost.readthedocs.io/en/latest/how_to/param_tuning.html#handle-imbalanc
 
 #### 当只关心预测的排序（AUC）时，
 
-平衡正负样本权重，通过scale_pos_weight
+ - 平衡正负样本权重，通过scale_pos_weight
 
-用AUC进行评价
+ - 用AUC进行评价
 
 #### 关心预测的正确的概率时，
 
-不能平衡正负样本比例
+ - 不能平衡正负样本比例
 
-通过max_delta_step来帮助收敛
+ - 通过max_delta_step来帮助收敛
 
  
  
